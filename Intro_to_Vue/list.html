@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Vue To Do List</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <h1>To Do List</h1>
+
+    <h2>Add a new task:</h2>
+    <label>Please enter a task: </label>
+    <input v-model="newTask">
+    <br>
+    <button v-on:click="addTask">Add Task</button>
+
+    <h2>Current Tasks:</h2>
+    <ul>
+        <!-- Loops through taskList and creates a list item for each task. -->
+        <li v-for="task in taskList">{{task}}</li>
+    </ul>
+    
+</div>
+
+<script>
+
+    const {createApp, ref } = Vue
+
+    createApp({
+        setup() {
+
+            // taskList is an array of strings. Each string is a task to do.
+            const taskList = ref(['Go to the store', 'Clean the house', 'Finish homework']) 
+            const newTask = ref('') // Empty string so user can input whatever they want
+
+            // Adds new task to taskList and clears input
+            function addTask() {
+                if (newTask.value.trim() !== '') { // Check if input is not empty
+                    taskList.value.push(newTask.value) // Add new task to taskList
+                    newTask.value = '' // Clear input after adding task
+                }
+            }
+
+            return {
+                taskList,
+                newTask,
+                addTask,
+            }
+        }
+    }).mount('#app')
+</script>
+
+</body>
+</html>
